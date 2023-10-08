@@ -14,6 +14,5 @@ if __name__ == "__main__":
     mongo_obj.connect_to_mongo()
     value = {"key": "Value", "AnotherKey": "AnotherValue"}
     my_db = mongo_obj.get_connection()
-    my_db = my_db[credentials["db_name"]]
     my_collection = my_db["NEW_COLLECTION"]
     my_collection.insert_one(value)
