@@ -1,7 +1,4 @@
-from pymongo import MongoClient
 from decouple import config
-from csv import DictReader, DictWriter
-import pandas as pd
 from mongo_db.mongo_connection import Mongo
 
 
