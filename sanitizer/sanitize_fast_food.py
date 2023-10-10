@@ -1,7 +1,9 @@
 from typing import Optional
 from pydantic import BaseModel, conint, confloat, field_validator, FieldValidationInfo
-from .validators.validators import validate_null_in_number_field
+
+# from .validators.validators import
 import logging
+import re
 
 
 class FastFoodObj(BaseModel):
@@ -9,16 +11,16 @@ class FastFoodObj(BaseModel):
 
     Company: Optional[str] = None
     Item: Optional[str] = None
-    Calories: Optional[conint(ge=0)] | None = None
-    CaloriesFromFat: Optional[conint(ge=0)] | None = None
-    TotalFat: Optional[confloat(ge=0) | conint(ge=0)] | None = None
-    SaturatedFat: Optional[confloat(ge=0) | conint(ge=0)] | None = None
+    Calories: Optional[conint(ge=0 or None)] | str = None
+    CaloriesFromFat: Optional[conint(ge=0 or None)] | str = None
+    TotalFat: Optional[confloat(ge=0 or None) | conint(ge=0 or None)] | None = None
+    SaturatedFat: Optional[confloat(ge=0 or None) | conint(ge=0 or None)] | None = None
     TransFat: Optional[confloat(ge=0) | conint(ge=0)] | None = None
-    Cholesterol: Optional[conint(ge=0) | None] = None
+    Cholesterol: Optional[conint(ge=0) | None] | str = None
     Sodium: Optional[conint(ge=0) | None] = None
     Carbs: Optional[confloat(ge=0) | conint(ge=0)] | None = None
     Fiber: Optional[confloat(ge=0) | conint(ge=0)] | None = None
-    Sugars: Optional[confloat(ge=0) | conint(ge=0)] | None = None
+    Sugars: Optional[confloat(ge=0 or None) | conint(ge=0 or None)] | None = None
     Protein: Optional[confloat(ge=0) | conint(ge=0)] | None = None
     WeightWatchersPnts: Optional[confloat(ge=0) | str] | None = None
 
@@ -28,7 +30,16 @@ class FastFoodObj(BaseModel):
         cls, value: int | None, info: FieldValidationInfo
     ) -> int | None:
         logging.info(info.config.get("title"))
-        return validate_null_in_number_field(value)
+        try:
+            if type(value) == str:
+                if not value or value == "":
+                    return 0
+                if "\xa0" in value:
+                    return 0
+                return int(value)
+            return int(value)
+        except:
+            return 0
 
     @field_validator("CaloriesFromFat")
     @classmethod
@@ -36,7 +47,16 @@ class FastFoodObj(BaseModel):
         cls, value: int | None, info: FieldValidationInfo
     ) -> int | None:
         logging.info(info.config.get("title"))
-        return validate_null_in_number_field(value)
+        try:
+            if type(value) == str:
+                if not value or value == "":
+                    return 0
+                if "\xa0" in value:
+                    return 0
+                return float(value)
+            return float(value)
+        except:
+            return 0.0
 
     @field_validator("TotalFat")
     @classmethod
@@ -44,7 +64,7 @@ class FastFoodObj(BaseModel):
         cls, value: float | int | None, info: FieldValidationInfo
     ) -> float | int | None:
         logging.info(info.config.get("title"))
-        return validate_null_in_number_field(value)
+        return float(value)
 
     @field_validator("SaturatedFat")
     @classmethod
@@ -52,7 +72,7 @@ class FastFoodObj(BaseModel):
         cls, value: float | int | None, info: FieldValidationInfo
     ) -> float | int | None:
         logging.info(info.config.get("title"))
-        return validate_null_in_number_field(value)
+        return float(value)
 
     @field_validator("TransFat")
     @classmethod
@@ -60,7 +80,7 @@ class FastFoodObj(BaseModel):
         cls, value: float | int | None, info: FieldValidationInfo
     ) -> float | int | None:
         logging.info(info.config.get("title"))
-        return validate_null_in_number_field(value)
+        return float(value)
 
     @field_validator("Cholesterol")
     @classmethod
@@ -68,7 +88,16 @@ class FastFoodObj(BaseModel):
         cls, value: int | None, info: FieldValidationInfo
     ) -> int | None:
         logging.info(info.config.get("title"))
-        return validate_null_in_number_field(value)
+        try:
+            if type(value) == str:
+                if not value or value == "":
+                    return 0
+                if "\xa0" in value:
+                    return 0
+                return float(value)
+            return float(value)
+        except:
+            return 0.0
 
     @field_validator("Sodium")
     @classmethod
@@ -76,7 +105,7 @@ class FastFoodObj(BaseModel):
         cls, value: int | None, info: FieldValidationInfo
     ) -> int | None:
         logging.info(info.config.get("title"))
-        return validate_null_in_number_field(value)
+        return float(value)
 
     @field_validator("Carbs")
     @classmethod
@@ -84,7 +113,7 @@ class FastFoodObj(BaseModel):
         cls, value: float | int | None, info: FieldValidationInfo
     ) -> float | int | None:
         logging.info(info.config.get("title"))
-        return validate_null_in_number_field(value)
+        return float(value)
 
     @field_validator("Fiber")
     @classmethod
@@ -92,7 +121,7 @@ class FastFoodObj(BaseModel):
         cls, value: float | int | None, info: FieldValidationInfo
     ) -> float | int | None:
         logging.info(info.config.get("title"))
-        return validate_null_in_number_field(value)
+        return float(value)
 
     @field_validator("Sugars")
     @classmethod
@@ -100,7 +129,7 @@ class FastFoodObj(BaseModel):
         cls, value: float | int | None, info: FieldValidationInfo
     ) -> float | int | None:
         logging.info(info.config.get("title"))
-        return validate_null_in_number_field(value)
+        return float(value)
 
     @field_validator("Protein")
     @classmethod
@@ -108,7 +137,7 @@ class FastFoodObj(BaseModel):
         cls, value: float | int | None, info: FieldValidationInfo
     ) -> float | int | None:
         logging.info(info.config.get("title"))
-        return validate_null_in_number_field(value)
+        return float(value)
 
     @field_validator("WeightWatchersPnts")
     @classmethod
@@ -116,4 +145,13 @@ class FastFoodObj(BaseModel):
         cls, value: float | int | None, info: FieldValidationInfo
     ) -> float | int | None:
         logging.info(info.config.get("title"))
-        return validate_null_in_number_field(value)
+        try:
+            if type(value) == str:
+                if not value or value == "":
+                    return 0
+                if "\xa0" in value:
+                    return 0
+                return float(value)
+            return float(value)
+        except:
+            return 0.0
