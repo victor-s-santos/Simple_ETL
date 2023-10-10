@@ -13,7 +13,6 @@ if __name__ == "__main__":
     }
     mongo_obj = Mongo(credentials=credentials)
     mongo_obj.connect_to_mongo()
-    value = {"key": "Value", "AnotherKey": "AnotherValue"}
     my_db = mongo_obj.get_connection()
     my_collection = my_db["NEW_COLLECTION"]
     file_name = "FastFoodNutritionMenu.csv"

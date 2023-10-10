@@ -10,6 +10,6 @@ def validate_null_in_number_field(value: Any) -> int | Any:
     Returns:
         int|Any: returns 0 if the given value is null otherwise returns the given value.
     """
-    if not value:
+    if not value or type(value) == str:
         return 0
     return value

@@ -1,3 +1,4 @@
+from typing import Optional
 from pydantic import BaseModel, conint, confloat, field_validator, FieldValidationInfo
 from .validators.validators import validate_null_in_number_field
 import logging
@@ -6,20 +7,20 @@ import logging
 class FastFoodObj(BaseModel):
     """Realize the validation of each specific data format for each fastfoodobj"""
 
-    Company: str
-    Item: str
-    Calories: conint(ge=0) | None
-    CaloriesFromFat: conint(ge=0) | None
-    TotalFat: confloat(ge=0) | conint(ge=0) | None
-    SaturatedFat: confloat(ge=0) | conint(ge=0) | None
-    TransFat: confloat(ge=0) | conint(ge=0) | None
-    Cholesterol: conint(ge=0) | None
-    Sodium: conint(ge=0) | None
-    Carbs: confloat(ge=0) | conint(ge=0) | None
-    Fiber: confloat(ge=0) | conint(ge=0) | None
-    Sugars: confloat(ge=0) | conint(ge=0) | None
-    Protein: confloat(ge=0) | conint(ge=0) | None
-    WeightWatchersPnts: confloat(ge=0) | str | None
+    Company: Optional[str] = None
+    Item: Optional[str] = None
+    Calories: Optional[conint(ge=0)] | None = None
+    CaloriesFromFat: Optional[conint(ge=0)] | None = None
+    TotalFat: Optional[confloat(ge=0) | conint(ge=0)] | None = None
+    SaturatedFat: Optional[confloat(ge=0) | conint(ge=0)] | None = None
+    TransFat: Optional[confloat(ge=0) | conint(ge=0)] | None = None
+    Cholesterol: Optional[conint(ge=0) | None] = None
+    Sodium: Optional[conint(ge=0) | None] = None
+    Carbs: Optional[confloat(ge=0) | conint(ge=0)] | None = None
+    Fiber: Optional[confloat(ge=0) | conint(ge=0)] | None = None
+    Sugars: Optional[confloat(ge=0) | conint(ge=0)] | None = None
+    Protein: Optional[confloat(ge=0) | conint(ge=0)] | None = None
+    WeightWatchersPnts: Optional[confloat(ge=0) | str] | None = None
 
     @field_validator("Calories")
     @classmethod
