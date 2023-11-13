@@ -1,9 +1,8 @@
 from decouple import config
 from mongo_db.mongo_connection import Mongo
 from handle_csv.main import generate_list_of_dictionaries
-from sanitizer.sanitize_fast_food import FastFoodObj
-from pydantic import ValidationError
-
+# from sanitizer.sanitize_fast_food import FastFoodObj
+# from pydantic import ValidationError
 import os
 
 if __name__ == "__main__":
@@ -26,9 +25,9 @@ if __name__ == "__main__":
         my_collection.insert_one(value)
     print(f"{len(list_of_values)} records has been inserted in mongodb")
 
-    list_of_sanitized_values = []
-    for value in my_collection.find({}):
-        try:
-            list_of_sanitized_values.append(FastFoodObj(**value))
-        except ValidationError as e:
-            print(e, value)
+    # list_of_sanitized_values = []
+    # for value in my_collection.find({}):
+    #     try:
+    #         list_of_sanitized_values.append(FastFoodObj(**value))
+    #     except ValidationError as e:
+    #         print(e, value)
